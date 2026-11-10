@@ -1,0 +1,11 @@
+{
+  "name": "AP13 NEWS",
+  "short_name": "AP13 NEWS",
+  "description": "నిజం జనం ముందుకు",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#b00020"
+}
