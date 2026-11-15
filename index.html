@@ -255,7 +255,7 @@ if (media && media.trim()) {
     image.style.height = "auto";
     image.style.borderRadius = "10px";
     image.style.marginTop = "10px";
-    item.appendChild(image);
+    image.onload = () => console.log("AP13 NEWS ఫోటో లోడ్ అయింది");item.appendChild(image);
   }
 
   const mediaLink = document.createElement("a");
