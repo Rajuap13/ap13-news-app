@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="te">
 <head>
@@ -17,7 +16,6 @@ body{
   background:#f2f2f2;
   color:#222;
 }
-
 header{
   background:linear-gradient(135deg,#8b0018,#d41432);
   color:white;
@@ -25,7 +23,6 @@ header{
   padding:22px 12px;
   width:100%;
 }
-
 header img{
   display:block;
   width:100%;
@@ -35,35 +32,29 @@ header img{
   margin:0 auto;
   border-radius:12px;
 }
-
 header h1{
   margin:12px 0 6px;
   font-size:clamp(28px,7vw,38px);
   font-weight:800;
   letter-spacing:1px;
 }
-
 header p{
   margin:6px 0;
   font-size:16px;
   font-weight:600;
 }
-
 nav{
   background:#222;
   color:white;
   padding:13px;
   text-align:center;
 }
-
 main{
   max-width:850px;
   margin:auto;
   padding:12px;
 }
-
 h2{color:#b00020}
-
 .news{
   background:white;
   padding:14px;
@@ -71,31 +62,29 @@ h2{color:#b00020}
   border-radius:10px;
   box-shadow:0 2px 6px #ccc;
 }
-
 .news img{
+  display:block;
   width:100%;
+  max-width:600px;
   max-height:260px;
-  object-fit:cover;
+  object-fit:contain;
   border-radius:7px;
+  margin-top:10px;
 }
-
 .news h3{
   color:#b00020;
   font-size:20px;
 }
-
 .news a{
   color:#b00020;
   text-decoration:none;
   font-weight:bold;
   font-size:16px;
 }
-
 .date{
   color:#777;
   font-size:13px;
 }
-
 footer{
   background:#222;
   color:white;
@@ -192,6 +181,15 @@ function parseCSV(text) {
   return rows;
 }
 
+// Google Drive లింక్ నుంచి File ID గుర్తించడం
+function getDriveFileId(url) {
+  const match = url.match(
+    /\/file\/d\/([a-zA-Z0-9_-]+)|[?&]id=([a-zA-Z0-9_-]+)/
+  );
+
+  return match ? (match[1] || match[2]) : null;
+}
+
 async function loadAP13News() {
   const box = document.getElementById("news");
 
@@ -242,29 +240,47 @@ async function loadAP13News() {
       description.textContent = details;
       item.appendChild(description);
 
-if (media && media.trim()) {
-  const mediaUrl = media.trim();
-  const match = mediaUrl.match(/\/file\/d\/([^/]+)/);
+      if (media && media.trim()) {
+        const mediaUrl = media.trim();
+        const fileId = getDriveFileId(mediaUrl);
 
-  if (match) {
-    const image = document.createElement("img");
-    image.src = `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
-    image.alt = "AP13 NEWS వార్తా ఫోటో";
-    image.style.width = "100%";
-    image.style.maxWidth = "600px";
-    image.style.height = "auto";
-    image.style.borderRadius = "10px";
-    image.style.marginTop = "10px";
-    image.onload = () => console.log("AP13 NEWS ఫోటో లోడ్ అయింది");item.appendChild(image);
-  }
+        // Google Drive ఫోటో ప్రివ్యూ
+        if (fileId) {
+          const image = document.createElement("img");
 
-  const mediaLink = document.createElement("a");
-  mediaLink.href = mediaUrl;
-  mediaLink.target = "_blank";
-  mediaLink.rel = "noopener";
-  mediaLink.textContent = "📷 ఫోటో / వీడియో చూడండి";
-  item.appendChild(mediaLink);
-}
+          image.src =
+            `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+
+          image.alt = "AP13 NEWS వార్తా ఫోటో";
+
+          image.onerror = () => {
+            image.style.display = "none";
+          };
+
+          item.appendChild(image);
+
+        } else if (/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(mediaUrl)) {
+          // Direct image link
+          const image = document.createElement("img");
+          image.src = mediaUrl;
+          image.alt = "AP13 NEWS వార్తా ఫోటో";
+
+          image.onerror = () => {
+            image.style.display = "none";
+          };
+
+          item.appendChild(image);
+        }
+
+        // అసలు ఫోటో లేదా వీడియో లింక్
+        const mediaLink = document.createElement("a");
+        mediaLink.href = mediaUrl;
+        mediaLink.target = "_blank";
+        mediaLink.rel = "noopener";
+        mediaLink.textContent = "📷 ఫోటో / వీడియో చూడండి";
+
+        item.appendChild(mediaLink);
+      }
 
       box.appendChild(item);
     });
