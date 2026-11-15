@@ -241,16 +241,29 @@ async function loadAP13News() {
       description.textContent = details;
       item.appendChild(description);
 
-      if (media && media.trim()) {
-        const mediaLink = document.createElement("a");
+if (media && media.trim()) {
+  const mediaUrl = media.trim();
+  const match = mediaUrl.match(/\/file\/d\/([^/]+)/);
 
-        mediaLink.href = media.trim();
-        mediaLink.target = "_blank";
-        mediaLink.rel = "noopener";
-        mediaLink.textContent = "📷 ఫోటో / వీడియో చూడండి";
+  if (match) {
+    const image = document.createElement("img");
+    image.src = `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1000`;
+    image.alt = "AP13 NEWS వార్తా ఫోటో";
+    image.style.width = "100%";
+    image.style.maxWidth = "600px";
+    image.style.height = "auto";
+    image.style.borderRadius = "10px";
+    image.style.marginTop = "10px";
+    item.appendChild(image);
+  }
 
-        item.appendChild(mediaLink);
-      }
+  const mediaLink = document.createElement("a");
+  mediaLink.href = mediaUrl;
+  mediaLink.target = "_blank";
+  mediaLink.rel = "noopener";
+  mediaLink.textContent = "📷 ఫోటో / వీడియో చూడండి";
+  item.appendChild(mediaLink);
+}
 
       box.appendChild(item);
     });
