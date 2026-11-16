@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="te">
 <head>
@@ -10,86 +11,228 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f2f2f2;
   color:#222;
 }
+
 header{
-  background:linear-gradient(135deg,#8b0018,#d41432);
-  color:white;
+  background:#001b70;
   text-align:center;
-  padding:22px 12px;
-  width:100%;
 }
+
 header img{
-  display:block;
   width:100%;
-  max-width:520px;
   height:auto;
-  object-fit:contain;
-  margin:0 auto;
-  border-radius:12px;
+  display:block;
 }
-header h1{
-  margin:12px 0 6px;
-  font-size:clamp(28px,7vw,38px);
-  font-weight:800;
-  letter-spacing:1px;
-}
-header p{
-  margin:6px 0;
-  font-size:16px;
-  font-weight:600;
-}
+
 nav{
   background:#222;
   color:white;
   padding:13px;
   text-align:center;
+  font-weight:bold;
 }
+
+.actions{
+  text-align:center;
+  padding:15px 10px;
+}
+
+.action-btn{
+  display:block;
+  width:min(92%,420px);
+  margin:12px auto;
+  padding:15px;
+  border-radius:12px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:18px;
+  box-shadow:0 3px 8px #bbb;
+}
+
+.reporter-btn{
+  background:linear-gradient(135deg,#8b0018,#d41432);
+}
+
+.submit-btn{
+  background:linear-gradient(135deg,#123b75,#1976d2);
+}
+
+.admin-btn{
+  background:linear-gradient(135deg,#333,#555);
+}
+
 main{
   max-width:850px;
   margin:auto;
   padding:12px;
 }
-h2{color:#b00020}
-.news{
+
+h2{
+  color:#b00020;
+  border-bottom:2px solid #b00020;
+  padding-bottom:8px;
+}
+
+.news-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.news-card{
   background:white;
-  padding:14px;
-  margin:14px 0;
+  padding:12px;
   border-radius:10px;
   box-shadow:0 2px 6px #ccc;
-}
-.news img{
-  display:block;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  cursor:pointer;
+  border:0;
   width:100%;
-  max-width:600px;
-  max-height:260px;
-  object-fit:contain;
+  text-align:left;
+  color:#222;
+  font-family:inherit;
+}
+
+.news-card img{
+  width:105px;
+  height:85px;
+  object-fit:cover;
   border-radius:7px;
-  margin-top:10px;
+  flex-shrink:0;
+  background:#eee;
 }
-.news h3{
+
+.news-card h3{
+  margin:0 0 7px;
   color:#b00020;
-  font-size:20px;
+  font-size:17px;
 }
-.news a{
+
+.news-card p{
+  margin:0;
+  color:#777;
+  font-size:12px;
+}
+
+.news-card .read-more{
   color:#b00020;
-  text-decoration:none;
+  font-size:13px;
   font-weight:bold;
-  font-size:16px;
+  margin-top:7px;
+  display:block;
 }
+
+.no-photo{
+  width:105px;
+  height:85px;
+  flex-shrink:0;
+  border-radius:7px;
+  background:#eee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+}
+
 .date{
   color:#777;
   font-size:13px;
+  margin:8px 0;
 }
+
+#news{
+  padding-bottom:15px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  z-index:1000;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  overflow-y:auto;
+  padding:15px;
+}
+
+.modal-content{
+  background:white;
+  max-width:700px;
+  margin:20px auto;
+  padding:18px;
+  border-radius:12px;
+  position:relative;
+}
+
+.close-btn{
+  display:block;
+  margin-left:auto;
+  background:#b00020;
+  color:white;
+  border:0;
+  border-radius:7px;
+  padding:9px 15px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.modal-content h2{
+  color:#b00020;
+  border:0;
+  line-height:1.5;
+}
+
+.modal-image{
+  width:100%;
+  max-height:450px;
+  object-fit:contain;
+  border-radius:8px;
+  margin:10px 0;
+  background:#eee;
+}
+
+.full-details{
+  white-space:pre-wrap;
+  line-height:1.8;
+  font-size:17px;
+}
+
+.media-link{
+  display:inline-block;
+  color:#b00020;
+  font-weight:bold;
+  margin:12px 0;
+}
+
 footer{
   background:#222;
   color:white;
   text-align:center;
   padding:20px;
+  line-height:1.8;
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+}
+
+@media(max-width:400px){
+  .news-card img,.no-photo{
+    width:85px;
+    height:75px;
+  }
+  .news-card h3{
+    font-size:15px;
+  }
 }
 </style>
 </head>
@@ -97,196 +240,271 @@ footer{
 <body>
 
 <header>
-  <div style="padding:0;background:#001b70;">
-    <img src="./ap13-banner.png"
-    alt="AP13 NEWS Banner"
-    style="width:100%;height:auto;display:block;">
-  </div>
+  <img src="./ap13-banner.png" alt="AP13 NEWS Banner">
 </header>
 
 <nav>ఆంధ్రప్రదేశ్ | తెలంగాణ | జాతీయం | ప్రపంచం</nav>
 
-<div style="text-align:center;padding:15px;">
+<div class="actions">
 
-  <div style="text-align:center;padding:18px 12px;">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&ouid=117282040008596624971"
-    target="_blank"
-    style="display:inline-block;background:linear-gradient(135deg,#8b0018,#d41432);color:white;padding:16px 26px;border-radius:12px;text-decoration:none;font-weight:800;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.22);width:min(88%,420px);box-sizing:border-box;">
-    📝 రిపోర్టర్‌గా చేరండి
-    </a>
-  </div>
+  <a class="action-btn reporter-btn"
+  href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&ouid=117282040008596624971"
+  target="_blank" rel="noopener">
+  📝 రిపోర్టర్‌గా చేరండి
+  </a>
 
-  <div style="text-align:center;padding:12px;">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&ouid=117282040008596624971"
-    target="_blank"
-    style="display:inline-block;background:linear-gradient(135deg,#123b75,#1976d2);color:white;padding:16px 26px;border-radius:12px;text-decoration:none;font-weight:800;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.22);width:min(88%,420px);box-sizing:border-box;">
-    📰 వార్తలు పంపండి
-    </a>
-  </div>
+  <a class="action-btn submit-btn"
+  href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&ouid=117282040008596624971"
+  target="_blank" rel="noopener">
+  📰 వార్తలు పంపండి
+  </a>
+
+  <a class="action-btn admin-btn"
+  href="https://script.google.com/macros/s/AKfycbzHMa5qyxMvtR41pF33gHfxOSVvQPFmVpxyUwtknzejaeLN0iy5YF1XHv4eMzFrtzbb/exec"
+  target="_blank" rel="noopener">
+  🔐 Admin Panel
+  </a>
 
 </div>
 
 <main>
   <h2>తాజా వార్తలు</h2>
-  <div id="news">వార్తలు లోడ్ అవుతున్నాయి...</div>
+  <div id="news" class="news-list">
+    <div class="loading">వార్తలు లోడ్ అవుతున్నాయి...</div>
+  </div>
 </main>
+
+<div id="newsModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeNews()">✖ మూసివేయండి</button>
+    <h2 id="modalTitle"></h2>
+    <p id="modalDate" class="date"></p>
+    <img id="modalImage" class="modal-image"
+         alt="AP13 NEWS వార్తా ఫోటో" style="display:none">
+    <p id="modalDetails" class="full-details"></p>
+    <a id="modalMediaLink" class="media-link"
+       target="_blank" rel="noopener" style="display:none">
+       📷 ఫోటో / వీడియో చూడండి
+    </a>
+  </div>
+</div>
 
 <footer>
   © AP13 NEWS<br>
-  నిజం జనం ముందుకు....
+  నిజం జనం ముందుకు....<br>
+  ఆంధ్రప్రదేశ్ | తెలంగాణ
 </footer>
 
 <script>
 
-const AP13_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSaid4LinMgR9UDTCyrHYPQ-QcTfXr9ia5DOYy6W4I2G_1YarYTQQDlW5nXZcu_in5ax1fjQo5OxbmB/pub?output=csv";
+const AP13_CSV_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vSaid4LinMgR9UDTCyrHYPQ-QcTfXr9ia5DOYy6W4I2G_1YarYTQQDlW5nXZcu_in5ax1fjQo5OxbmB/pub?output=csv";
 
-function parseCSV(text) {
-  const rows = [];
-  let row = [];
-  let value = "";
-  let quoted = false;
+function parseCSV(text){
+  const rows=[];
+  let row=[];
+  let value="";
+  let quoted=false;
 
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
 
-    if (c === '"' && quoted && text[i + 1] === '"') {
-      value += '"';
+    if(c==='"' && quoted && text[i+1]==='"'){
+      value+='"';
       i++;
-    } else if (c === '"') {
-      quoted = !quoted;
-    } else if (c === ',' && !quoted) {
+    }else if(c==='"'){
+      quoted=!quoted;
+    }else if(c===',' && !quoted){
       row.push(value);
-      value = "";
-    } else if ((c === '\n' || c === '\r') && !quoted) {
-      if (c === '\r' && text[i + 1] === '\n') i++;
+      value="";
+    }else if((c==='\n'||c==='\r')&&!quoted){
+      if(c==='\r'&&text[i+1]==='\n')i++;
       row.push(value);
 
-      if (row.some(cell => cell.trim() !== "")) {
+      if(row.some(cell=>cell.trim()!=="")){
         rows.push(row);
       }
 
-      row = [];
-      value = "";
-    } else {
-      value += c;
+      row=[];
+      value="";
+    }else{
+      value+=c;
     }
   }
 
   row.push(value);
 
-  if (row.some(cell => cell.trim() !== "")) {
+  if(row.some(cell=>cell.trim()!=="")){
     rows.push(row);
   }
 
   return rows;
 }
 
-// Google Drive లింక్ నుంచి File ID గుర్తించడం
-function getDriveFileId(url) {
-  const match = url.match(
+function getDriveFileId(url){
+  const match=url.match(
     /\/file\/d\/([a-zA-Z0-9_-]+)|[?&]id=([a-zA-Z0-9_-]+)/
   );
 
-  return match ? (match[1] || match[2]) : null;
+  return match?(match[1]||match[2]):null;
 }
 
-async function loadAP13News() {
-  const box = document.getElementById("news");
+function getImageUrl(media){
+  if(!media)return "";
 
-  try {
-    const response = await fetch(AP13_CSV_URL);
+  const url=media.trim();
+  const fileId=getDriveFileId(url);
 
-    if (!response.ok) {
+  if(fileId){
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+  }
+
+  if(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url)){
+    return url;
+  }
+
+  return "";
+}
+
+function formatDate(date){
+  const parsedDate=new Date(date);
+
+  return "తేదీ: "+(
+    isNaN(parsedDate)
+    ? date
+    : parsedDate.toLocaleDateString("te-IN")
+  );
+}
+
+function openNews(post){
+
+  document.getElementById("modalTitle").textContent=post.title;
+  document.getElementById("modalDate").textContent=formatDate(post.date);
+  document.getElementById("modalDetails").textContent=post.details;
+
+  const image=document.getElementById("modalImage");
+  const imageUrl=getImageUrl(post.media);
+
+  if(imageUrl){
+    image.src=imageUrl;
+    image.style.display="block";
+    image.onerror=()=>image.style.display="none";
+  }else{
+    image.style.display="none";
+  }
+
+  const mediaLink=document.getElementById("modalMediaLink");
+
+  if(post.media){
+    mediaLink.href=post.media;
+    mediaLink.style.display="inline-block";
+  }else{
+    mediaLink.style.display="none";
+  }
+
+  document.getElementById("newsModal").style.display="block";
+  document.body.style.overflow="hidden";
+}
+
+function closeNews(){
+  document.getElementById("newsModal").style.display="none";
+  document.body.style.overflow="auto";
+}
+
+document.getElementById("newsModal").addEventListener("click",function(event){
+  if(event.target===this){
+    closeNews();
+  }
+});
+
+async function loadAP13News(){
+
+  const box=document.getElementById("news");
+
+  try{
+
+    const response=await fetch(AP13_CSV_URL);
+
+    if(!response.ok){
       throw new Error("News loading failed");
     }
 
-    const csv = await response.text();
-    const rows = parseCSV(csv);
+    const csv=await response.text();
+    const rows=parseCSV(csv);
 
-    const posts = rows.slice(1).filter(row =>
-      row[1] && row[1].trim()
-    );
+    const posts=rows.slice(1)
+      .filter(row=>row[1]&&row[1].trim())
+      .map(row=>({
+        date:row[0]||"",
+        title:row[1]||"",
+        details:row[2]||"",
+        media:row[3]||""
+      }))
+      .reverse();
 
-    box.innerHTML = "";
+    box.innerHTML="";
 
-    if (!posts.length) {
-      box.textContent = "ప్రస్తుతం ఆమోదించిన వార్తలు లేవు.";
+    if(!posts.length){
+      box.textContent="ప్రస్తుతం ఆమోదించిన వార్తలు లేవు.";
       return;
     }
 
-    posts.reverse().forEach(post => {
-      const [date, title, details, media] = post;
+    posts.forEach(post=>{
 
-      const item = document.createElement("div");
-      item.className = "news";
+      const card=document.createElement("button");
+      card.type="button";
+      card.className="news-card";
 
-      const heading = document.createElement("h3");
-      heading.textContent = title;
-      item.appendChild(heading);
+      const imageUrl=getImageUrl(post.media);
 
-      const time = document.createElement("p");
-      time.className = "date";
+      if(imageUrl){
 
-      const parsedDate = new Date(date);
+        const image=document.createElement("img");
+        image.src=imageUrl;
+        image.alt="వార్తా ఫోటో";
 
-      time.textContent = "తేదీ: " +
-        (isNaN(parsedDate)
-          ? date
-          : parsedDate.toLocaleDateString("te-IN"));
+        image.onerror=()=>{
+          image.style.display="none";
+        };
 
-      item.appendChild(time);
+        card.appendChild(image);
 
-      const description = document.createElement("p");
-      description.textContent = details;
-      item.appendChild(description);
+      }else{
 
-      if (media && media.trim()) {
-        const mediaUrl = media.trim();
-        const fileId = getDriveFileId(mediaUrl);
-
-        // Google Drive ఫోటో ప్రివ్యూ
-        if (fileId) {
-          const image = document.createElement("img");
-
-          image.src =
-            `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
-
-          image.alt = "AP13 NEWS వార్తా ఫోటో";
-
-          image.onerror = () => {
-            image.style.display = "none";
-          };
-
-          item.appendChild(image);
-
-        } else if (/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(mediaUrl)) {
-          // Direct image link
-          const image = document.createElement("img");
-          image.src = mediaUrl;
-          image.alt = "AP13 NEWS వార్తా ఫోటో";
-
-          image.onerror = () => {
-            image.style.display = "none";
-          };
-
-          item.appendChild(image);
-        }
-
-        // అసలు ఫోటో లేదా వీడియో లింక్
-        const mediaLink = document.createElement("a");
-        mediaLink.href = mediaUrl;
-        mediaLink.target = "_blank";
-        mediaLink.rel = "noopener";
-        mediaLink.textContent = "📷 ఫోటో / వీడియో చూడండి";
-
-        item.appendChild(mediaLink);
+        const noPhoto=document.createElement("div");
+        noPhoto.className="no-photo";
+        noPhoto.textContent="📰";
+        card.appendChild(noPhoto);
       }
 
-      box.appendChild(item);
+      const info=document.createElement("div");
+      info.style.flex="1";
+
+      const heading=document.createElement("h3");
+      heading.textContent=post.title;
+      info.appendChild(heading);
+
+      const date=document.createElement("p");
+      date.textContent=formatDate(post.date);
+      info.appendChild(date);
+
+      const readMore=document.createElement("span");
+      readMore.className="read-more";
+      readMore.textContent="పూర్తి వార్త చదవండి →";
+      info.appendChild(readMore);
+
+      card.appendChild(info);
+
+      card.addEventListener("click",()=>{
+        openNews(post);
+      });
+
+      box.appendChild(card);
     });
 
-  } catch (error) {
-    box.textContent =
+  }catch(error){
+
+    box.textContent=
       "వార్తలు లోడ్ కాలేదు. దయచేసి కొద్దిసేపటి తర్వాత ప్రయత్నించండి.";
 
     console.error(error);
@@ -298,8 +516,8 @@ loadAP13News();
 </script>
 
 <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
     navigator.serviceWorker.register("./sw.js");
   });
 }
