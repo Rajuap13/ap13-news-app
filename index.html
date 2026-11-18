@@ -1,242 +1,564 @@
-from pathlib import Path
 
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="te">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#071d55">
-<meta name="description" content="AP13 NEWS - నిజం జనం ముందుకు. ఆంధ్రప్రదేశ్, తెలంగాణ తాజా వార్తలు.">
-<link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-512.png">
-<title>AP13 NEWS | నిజం జనం ముందుకు</title>
-<style>
-*{box-sizing:border-box}
-:root{--red:#b00020;--dark:#071d55;--blue:#123c82;--light:#f3f5f9}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Arial,"Noto Sans Telugu",sans-serif;background:var(--light);color:#222;padding-bottom:calc(76px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%}
-header{background:var(--dark);text-align:center}
-header img{width:100%;max-height:190px;object-fit:contain;display:block}
-.brand-line{background:#071d55;color:white;padding:8px 7px;font-size:13px;text-align:center}
-.breaking{background:#fff;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid #ddd;height:42px}
-.breaking-label{background:var(--red);color:white;font-weight:bold;padding:12px 10px;white-space:nowrap;font-size:13px}
-.ticker{overflow:hidden;flex:1;white-space:nowrap}
-.ticker span{display:inline-block;padding-left:100%;animation:scrollnews 24s linear infinite;font-size:14px;font-weight:bold}
-@keyframes scrollnews{from{transform:translateX(0)}to{transform:translateX(-100%)}}
-nav{background:#17243b;display:flex;overflow-x:auto;gap:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-nav::-webkit-scrollbar{display:none}
-nav button{flex-shrink:0;background:transparent;border:0;color:white;padding:13px 15px;font-size:14px;font-weight:bold;cursor:pointer;min-height:44px}
-nav button.active,nav button:hover{background:var(--red)}
-.actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;max-width:1100px;margin:12px auto;padding:0 12px}
-.action-btn{display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;padding:10px 5px;border-radius:9px;color:white;text-decoration:none;font-weight:bold;font-size:13px;box-shadow:0 2px 6px #bbb;line-height:1.4}
-.reporter-btn{background:#9d001e}.submit-btn{background:#1555a5}.admin-btn{background:#343a40}
-main{max-width:1100px;margin:auto;padding:10px 13px}
-.section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;border-left:5px solid var(--red);padding:8px 10px;margin:16px 0 12px;background:white;box-shadow:0 1px 4px #ddd}
-.section-title h2{margin:0;font-size:19px;color:var(--red)}
-.section-title small{color:#777;font-size:12px;white-space:nowrap}
-.search-box{width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:9px;font-size:16px;margin:5px 0 12px;outline-color:var(--red);min-height:46px}
-.hero{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px #ddd;cursor:pointer}
-.hero img{width:100%;height:250px;object-fit:cover;display:block;background:#ddd}
-.hero-content{padding:13px}
-.hero h2{color:#a00020;font-size:20px;line-height:1.5;margin:0 0 8px}
-.hero p{color:#777;font-size:13px;margin:0}
-.hero-label{display:inline-block;background:var(--red);color:white;padding:5px 9px;border-radius:4px;font-size:11px;font-weight:bold;margin-bottom:8px}
-.news-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.news-card{background:white;border:0;padding:0;border-radius:10px;overflow:hidden;box-shadow:0 2px 7px #ddd;text-align:left;width:100%;cursor:pointer;color:#222;font-family:inherit;min-width:0}
-.news-card img{width:100%;height:155px;object-fit:cover;display:block;background:#eee}
-.news-card-content{padding:11px;min-width:0}
-.news-card h3{font-size:15px;line-height:1.5;color:#a00020;margin:0 0 8px;overflow-wrap:anywhere}
-.news-card p{font-size:12px;color:#777;margin:0}
-.read-more{display:block;color:#b00020;font-weight:bold;font-size:13px;margin-top:9px}
-.no-photo{height:155px;display:flex;align-items:center;justify-content:center;font-size:45px;background:#e9edf5}
-.loading,.empty{background:white;padding:25px 12px;border-radius:9px;text-align:center;color:#666;grid-column:1/-1}
-.modal{display:none;position:fixed;z-index:1000;inset:0;background:rgba(0,0,0,.85);overflow-y:auto;padding:12px}
-.modal-content{background:white;width:100%;max-width:750px;margin:15px auto;padding:16px;border-radius:12px}
-.close-btn{display:block;margin-left:auto;background:var(--red);color:white;border:0;border-radius:6px;padding:10px 14px;font-size:15px;cursor:pointer;min-height:44px}
-.modal-content h2{color:var(--red);font-size:22px;line-height:1.6;overflow-wrap:anywhere}
-.modal-image{width:100%;max-height:420px;object-fit:contain;background:#eee;border-radius:8px}
-.full-details{white-space:pre-wrap;line-height:1.9;font-size:17px;overflow-wrap:anywhere}
-.news-meta{font-size:13px;color:#666;line-height:1.9;border-top:1px solid #ddd;padding-top:10px}
-.media-link{display:inline-block;color:var(--red);font-weight:bold;margin:12px 0}
-footer{background:#111d36;color:white;text-align:center;padding:22px 10px;line-height:1.9;font-size:14px}
-footer a{color:white}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:500;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:white;box-shadow:0 -2px 10px #bbb;padding:7px 2px calc(7px + env(safe-area-inset-bottom))}
-.bottom-nav a,.bottom-nav button{border:0;background:transparent;color:#444;text-decoration:none;text-align:center;font-size:11px;font-weight:bold;cursor:pointer;min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.bottom-nav .symbol{display:block;font-size:21px;line-height:1.2}
-.bottom-nav .selected{color:var(--red)}
-@media(min-width:700px){
-.hero{display:grid;grid-template-columns:55% 45%}
-.hero img{height:300px}
-.hero-content{align-self:center;padding:25px}
-.hero h2{font-size:25px}
-.news-list{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@media(max-width:600px){
-header img{max-height:145px}
-.actions{gap:6px;padding:0 8px;margin:10px auto}
-.action-btn{font-size:11px;padding:9px 3px;min-height:48px}
-main{padding:8px 10px}
-.news-list{grid-template-columns:1fr;gap:10px}
-.news-card{display:flex;align-items:stretch;min-height:108px}
-.news-card img,.news-card .no-photo{width:112px;height:auto;min-height:108px;max-height:135px;flex:0 0 112px}
-.news-card-content{flex:1;padding:9px;align-self:center}
-.news-card h3{font-size:14px}
-.hero img{height:205px}
-.hero h2{font-size:18px}
-.section-title h2{font-size:17px}
-.modal{padding:7px}
-.modal-content{margin:7px auto;padding:12px}
-.modal-content h2{font-size:19px}
-.full-details{font-size:16px}
-}
-@media(max-width:360px){
-.breaking-label{font-size:11px;padding:12px 7px}
-.brand-line{font-size:12px}
-.action-btn{font-size:10px}
-.bottom-nav a,.bottom-nav button{font-size:10px}
-.news-card img,.news-card .no-photo{width:96px;flex-basis:96px}
-}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ticker span{animation:none;padding-left:10px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b00020">
+  <meta name="description" content="AP13 NEWS - ఆంధ్రప్రదేశ్ మరియు తెలంగాణ తాజా వార్తలు">
+  <title>AP13 NEWS | నిజం జనం ముందుకు</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-512.png">
+  <link rel="apple-touch-icon" href="./icon-512.png">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Telugu", sans-serif;
+      background: #f4f5f7;
+      color: #222;
+    }
+
+    header {
+      background: #b00020;
+      color: white;
+      text-align: center;
+      padding: 14px 10px 18px;
+    }
+
+    .banner {
+      width: 100%;
+      max-width: 950px;
+      max-height: 190px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 8px;
+    }
+
+    header h1 {
+      margin: 8px 0;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    header p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .tagline {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background: #171717;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 10px 5px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 13px;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      background: #b00020;
+    }
+
+    .breaking {
+      background: #fff0f0;
+      color: #b00020;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .container {
+      width: 94%;
+      max-width: 1100px;
+      margin: 20px auto;
+    }
+
+    .section-title {
+      background: #b00020;
+      color: white;
+      padding: 12px 15px;
+      border-radius: 5px;
+      font-size: 20px;
+      margin: 20px 0 15px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .news-card {
+      background: white;
+      border-radius: 9px;
+      overflow: hidden;
+      box-shadow: 0 2px 9px rgba(0,0,0,0.09);
+      border: 1px solid #e5e5e5;
+    }
+
+    .news-card img {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .news-content {
+      padding: 15px;
+    }
+
+    .news-content h3 {
+      color: #b00020;
+      font-size: 19px;
+      line-height: 1.5;
+      margin: 0 0 10px;
+    }
+
+    .news-content p {
+      font-size: 15px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      margin: 8px 0;
+    }
+
+    .news-meta {
+      color: #777;
+      font-size: 13px;
+      border-top: 1px solid #eee;
+      padding-top: 9px;
+      margin-top: 12px;
+    }
+
+    .action-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .action-card {
+      background: white;
+      padding: 20px;
+      text-align: center;
+      border-radius: 9px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .action-card h3 {
+      color: #b00020;
+      margin-top: 0;
+    }
+
+    .action-button {
+      display: inline-block;
+      background: #b00020;
+      color: white;
+      text-decoration: none;
+      padding: 11px 18px;
+      border-radius: 5px;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .action-button:hover {
+      background: #850018;
+    }
+
+    .status {
+      text-align: center;
+      padding: 20px;
+      color: #555;
+      background: white;
+      border-radius: 7px;
+      margin-bottom: 15px;
+    }
+
+    .error {
+      color: #b00020;
+    }
+
+    footer {
+      background: #171717;
+      color: white;
+      text-align: center;
+      padding: 22px 12px;
+      margin-top: 35px;
+      line-height: 1.8;
+    }
+
+    footer strong {
+      color: #ffb5c2;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 27px;
+      }
+
+      nav a {
+        padding: 9px;
+        font-size: 13px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+
 <header>
-<img src="./ap13-banner.png" alt="AP13 NEWS">
-<div class="brand-line">నిజం జనం ముందుకు.... | ఆంధ్రప్రదేశ్ • తెలంగాణ</div>
+  <img class="banner" src="./ap13-banner.png"
+       alt="AP13 NEWS"
+       onerror="this.style.display='none'">
+
+  <h1>ఏపీ 13 న్యూస్</h1>
+  <p>ANDHRA PRADESH - TELANGANA</p>
+  <p class="tagline">నిజం జనం ముందుకు....</p>
 </header>
-<div class="breaking"><div class="breaking-label">BREAKING NEWS</div><div class="ticker"><span id="tickerText">AP13 NEWS - తాజా వార్తల కోసం చూస్తూ ఉండండి...</span></div></div>
-<nav id="categoryNav">
-<button class="active" data-category="all">హోమ్</button>
-<button data-category="ap">ఆంధ్రప్రదేశ్</button>
-<button data-category="ts">తెలంగాణ</button>
-<button data-category="india">జాతీయం</button>
-<button data-category="world">ప్రపంచం</button>
-<button data-category="video">వీడియోలు</button>
+
+<nav>
+  <a href="#home">హోమ్</a>
+  <a href="#latest">తాజా వార్తలు</a>
+  <a href="#reporter">రిపోర్టర్ అవ్వండి</a>
+  <a href="#submit">వార్త పంపండి</a>
+  <a href="#contact">సంప్రదించండి</a>
+  <a href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
+     target="_blank" rel="noopener">అడ్మిన్ ప్యానెల్</a>
 </nav>
-<div class="actions">
-<a class="action-btn reporter-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&amp;ouid=117282040008596624971" target="_blank" rel="noopener">📝 రిపోర్టర్‌గా చేరండి</a>
-<a class="action-btn submit-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&amp;ouid=117282040008596624971" target="_blank" rel="noopener">📰 వార్తలు పంపండి</a>
-<a class="action-btn admin-btn" href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec" target="_self">🔐 Admin Panel</a>
+
+<div class="breaking">
+  ఆంధ్రప్రదేశ్ మరియు తెలంగాణ తాజా వార్తలు - AP13 NEWS
 </div>
-<main>
-<input id="searchBox" class="search-box" type="search" placeholder="🔍 వార్తలను వెతకండి..." aria-label="వార్తలను వెతకండి">
-<div class="section-title"><h2>ముఖ్య వార్త</h2><small>TOP STORY</small></div>
-<div id="heroNews"><div class="loading">వార్తలు లోడ్ అవుతున్నాయి...</div></div>
-<div class="section-title"><h2 id="listHeading">తాజా వార్తలు</h2><small>AP13 NEWS</small></div>
-<div id="news" class="news-list"><div class="loading">వార్తలు లోడ్ అవుతున్నాయి...</div></div>
+
+<main class="container" id="home">
+
+  <h2 class="section-title" id="latest">తాజా వార్తలు</h2>
+
+  <input
+    type="search"
+    id="searchInput"
+    class="search-box"
+    placeholder="వార్తల కోసం వెతకండి..."
+    oninput="filterNews()"
+  >
+
+  <div id="newsStatus" class="status">
+    వార్తలు లోడ్ అవుతున్నాయి... దయచేసి వేచి ఉండండి.
+  </div>
+
+  <div id="newsContainer" class="news-grid"></div>
+
+  <h2 class="section-title">AP13 NEWS సేవలు</h2>
+
+  <div class="action-section">
+
+    <div class="action-card" id="reporter">
+      <h3>రిపోర్టర్‌గా చేరండి</h3>
+      <p>
+        ఆంధ్రప్రదేశ్ మరియు తెలంగాణలోని ఆసక్తి ఉన్నవారు
+        AP13 NEWS రిపోర్టర్లుగా చేరవచ్చు.
+      </p>
+      <a class="action-button"
+         href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&ouid=117282040008596624971"
+         target="_blank" rel="noopener">
+        అప్లికేషన్ పంపండి
+      </a>
+    </div>
+
+    <div class="action-card" id="submit">
+      <h3>వార్త పంపండి</h3>
+      <p>
+        మీ ప్రాంతంలో జరిగే ప్రజా సమస్యలు, సంఘటనలు,
+        కార్యక్రమాల వార్తలను మాకు పంపండి.
+      </p>
+      <a class="action-button"
+         href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&ouid=117282040008596624971"
+         target="_blank" rel="noopener">
+        ఇప్పుడే వార్త పంపండి
+      </a>
+    </div>
+
+    <div class="action-card">
+      <h3>అడ్మిన్ ప్యానెల్</h3>
+      <p>
+        వచ్చిన వార్తలు, రిపోర్టర్ అప్లికేషన్లను
+        పరిశీలించడానికి అడ్మిన్ విభాగం.
+      </p>
+      <a class="action-button"
+         href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
+         target="_blank" rel="noopener">
+        అడ్మిన్ ఓపెన్ చేయండి
+      </a>
+    </div>
+
+  </div>
+
+  <h2 class="section-title" id="contact">సంప్రదించండి</h2>
+  <div class="action-card">
+    <p><strong>AP13 NEWS</strong></p>
+    <p>ఆంధ్రప్రదేశ్ - తెలంగాణ</p>
+    <p>
+      Email:
+      <a href="mailto:apnews13local@gmail.com">
+        apnews13local@gmail.com
+      </a>
+    </p>
+  </div>
+
 </main>
-<div id="newsModal" class="modal">
-<div class="modal-content">
-<button class="close-btn" onclick="closeNews()">✖ మూసివేయండి</button>
-<h2 id="modalTitle"></h2><p id="modalDate" class="news-meta"></p>
-<img id="modalImage" class="modal-image" alt="వార్తా ఫోటో" style="display:none">
-<p id="modalDetails" class="full-details"></p><div id="modalMeta" class="news-meta"></div>
-<a id="modalMediaLink" class="media-link" target="_blank" rel="noopener" style="display:none">📷 ఫోటో / వీడియో చూడండి</a>
-</div></div>
-<footer><strong>AP13 NEWS</strong><br>నిజం జనం ముందుకు....<br>ఆంధ్రప్రదేశ్ | తెలంగాణ<br>© AP13 NEWS. All Rights Reserved.</footer>
-<div class="bottom-nav">
-<a href="#" class="selected" onclick="showAll();return false"><span class="symbol">🏠</span>హోమ్</a>
-<a href="#news" onclick="showAll();return true"><span class="symbol">📰</span>వార్తలు</a>
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing" target="_blank" rel="noopener"><span class="symbol">✍️</span>వార్త పంపు</a>
-<button onclick="shareAP13()"><span class="symbol">📤</span>షేర్</button>
-<a href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec" target="_self"><span class="symbol">⚙️</span>Admin</a>
-</div>
+
+<footer>
+  <strong>ఏపీ 13 న్యూస్</strong>
+  <br>
+  నిజం జనం ముందుకు....
+  <br>
+  ANDHRA PRADESH - TELANGANA
+  <br>
+  © 2026 AP13 NEWS. All Rights Reserved.
+</footer>
+
 <script>
-const AP13_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTf0kjzdUQFm0mv87JEFoQfdYpqeIkb3Xovp68rmI2yJ6HvLYHaUl_lV2Xc55bmsl2_ntpk3SPew_c/pub?gid=853433044&single=true&output=csv";
-let allPosts=[],currentCategory="all";
-function parseCSV(text){
-const rows=[];let row=[],value="",quoted=false;
-for(let i=0;i<text.length;i++){const c=text[i];
-if(c==='"'&&quoted&&text[i+1]==='"'){value+='"';i++}
-else if(c==='"'){quoted=!quoted}
-else if(c===','&&!quoted){row.push(value);value=""}
-else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&text[i+1]==='\n')i++;row.push(value);if(row.some(x=>x.trim()!==""))rows.push(row);row=[];value=""}
-else{value+=c}}
-row.push(value);if(row.some(x=>x.trim()!==""))rows.push(row);return rows}
-function getDriveFileId(url){const match=url.match(/\/file\/d\/([a-zA-Z0-9_-]+)|[?&]id=([a-zA-Z0-9_-]+)/);return match?(match[1]||match[2]):null}
-function getImageUrl(media){if(!media)return "";const url=media.trim(),id=getDriveFileId(url);if(id)return "https://drive.google.com/thumbnail?id="+id+"&sz=w1000";if(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url))return url;return ""}
-function formatDate(date){if(!date)return "";const d=new Date(date);return "తేదీ: "+(isNaN(d)?date:d.toLocaleDateString("te-IN"))}
-function makeImage(url,alt){const img=document.createElement("img");img.src=url;img.alt=alt;img.loading="lazy";img.onerror=()=>{img.style.display="none"};return img}
-function openNews(post){
-document.getElementById("modalTitle").textContent=post.title;
-document.getElementById("modalDate").textContent=formatDate(post.date);
-document.getElementById("modalDetails").textContent=post.details;
-document.getElementById("modalMeta").textContent="రిపోర్టర్: "+(post.reporter||"AP13 NEWS")+" | ప్రచురణ: "+(post.publisher||"AP13 NEWS");
-const image=document.getElementById("modalImage"),imageUrl=getImageUrl(post.media);
-if(imageUrl){image.src=imageUrl;image.style.display="block";image.onerror=()=>image.style.display="none"}else{image.style.display="none"}
-const link=document.getElementById("modalMediaLink");if(post.media){link.href=post.media;link.style.display="inline-block"}else{link.style.display="none"}
-document.getElementById("newsModal").style.display="block";document.body.style.overflow="hidden"}
-function closeNews(){document.getElementById("newsModal").style.display="none";document.body.style.overflow="auto"}
-document.getElementById("newsModal").addEventListener("click",function(e){if(e.target===this)closeNews()});
-function createHero(post){
-const box=document.getElementById("heroNews");box.innerHTML="";
-if(!post){box.textContent="ప్రస్తుతం ముఖ్య వార్తలు లేవు.";return}
-const card=document.createElement("article");card.className="hero";card.onclick=()=>openNews(post);
-const imgUrl=getImageUrl(post.media);if(imgUrl)card.appendChild(makeImage(imgUrl,"ముఖ్య వార్త"));
-const content=document.createElement("div");content.className="hero-content";
-const label=document.createElement("span");label.className="hero-label";label.textContent="AP13 NEWS | ముఖ్య వార్త";content.appendChild(label);
-const title=document.createElement("h2");title.textContent=post.title;content.appendChild(title);
-const date=document.createElement("p");date.textContent=formatDate(post.date)+" | పూర్తి వార్త చదవండి →";content.appendChild(date);
-card.appendChild(content);box.appendChild(card)}
-function renderPosts(posts){
-const box=document.getElementById("news");box.innerHTML="";
-if(!posts.length){box.innerHTML='<div class="empty">ఈ విభాగంలో ప్రస్తుతం వార్తలు లేవు.</div>';return}
-posts.forEach(post=>{
-const card=document.createElement("button");card.type="button";card.className="news-card";card.onclick=()=>openNews(post);
-const url=getImageUrl(post.media);if(url)card.appendChild(makeImage(url,"వార్తా ఫోటో"));else{const noPhoto=document.createElement("div");noPhoto.className="no-photo";noPhoto.textContent="📰";card.appendChild(noPhoto)}
-const content=document.createElement("div");content.className="news-card-content";
-const title=document.createElement("h3");title.textContent=post.title;content.appendChild(title);
-const date=document.createElement("p");date.textContent=formatDate(post.date);content.appendChild(date);
-const more=document.createElement("span");more.className="read-more";more.textContent="పూర్తి వార్త చదవండి →";content.appendChild(more);
-card.appendChild(content);box.appendChild(card)})}
-function showAll(){currentCategory="all";document.querySelectorAll("#categoryNav button").forEach(b=>b.classList.toggle("active",b.dataset.category==="all"));document.getElementById("listHeading").textContent="తాజా వార్తలు";document.getElementById("searchBox").value="";createHero(allPosts[0]);renderPosts(allPosts)}
-function categoryMatch(post,category){
-const text=(post.title+" "+post.details).toLowerCase();
-const keywords={
-ap:["ఆంధ్రప్రదేశ్","ఆంధ్ర","విజయవాడ","విశాఖ","గుంటూరు","కర్నూలు","తిరుపతి","అమరావతి","ఏపీ","ప్రకాశం","నెల్లూరు","కడప","అనంతపురం","చిత్తూరు","శ్రీకాకుళం","విజయనగరం","కృష్ణా","గోదావరి"],
-ts:["తెలంగాణ","హైదరాబాద్","వరంగల్","ఖమ్మం","కరీంనగర్","నిజామాబాద్","నల్గొండ","సిద్దిపేట","మహబూబ్‌నగర్","రంగారెడ్డి","సంగారెడ్డి"],
-india:["జాతీయం","దేశవ్యాప్తంగా","కేంద్ర ప్రభుత్వం","న్యూఢిల్లీ","లోక్‌సభ","రాజ్యసభ","భారతదేశం"],
-world:["ప్రపంచం","అంతర్జాతీయం","అమెరికా","చైనా","రష్యా","పాకిస్తాన్","లండన్","విదేశాల్లో"]};
-if(category==="video")return /youtube|youtu\.be|video|mp4/i.test(post.media||"");
-return (keywords[category]||[]).some(k=>text.includes(k.toLowerCase()))}
-function applyFilters(){
-const search=document.getElementById("searchBox").value.trim().toLowerCase();
-const posts=allPosts.filter(p=>(p.title+" "+p.details).toLowerCase().includes(search)&&(currentCategory==="all"||categoryMatch(p,currentCategory)));
-document.getElementById("heroNews").style.display=(currentCategory==="all"&&!search)?"block":"none";
-const activeButton=document.querySelector('#categoryNav button[data-category="'+currentCategory+'"]');
-document.getElementById("listHeading").textContent=currentCategory==="all"?"తాజా వార్తలు":(activeButton?activeButton.textContent:"వార్తలు");
-renderPosts(posts)}
-document.querySelectorAll("#categoryNav button").forEach(button=>button.addEventListener("click",()=>{currentCategory=button.dataset.category;document.querySelectorAll("#categoryNav button").forEach(b=>b.classList.toggle("active",b===button));applyFilters()}));
-document.getElementById("searchBox").addEventListener("input",applyFilters);
-async function loadAP13News(){
-const box=document.getElementById("news");
-try{
-const response=await fetch(AP13_CSV_URL+"&t="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("News loading failed");
-const rows=parseCSV(await response.text());
-allPosts=rows.slice(1).filter(row=>row[1]&&row[1].trim()).map(row=>({date:row[0]||"",title:row[1]||"",details:row[2]||"",media:row[3]||"",reporter:row[4]||"",publisher:row[5]||"AP13 NEWS"})).reverse();
-if(!allPosts.length){box.innerHTML='<div class="empty">ప్రస్తుతం ఆమోదించిన వార్తలు లేవు.</div>';document.getElementById("heroNews").innerHTML='<div class="empty">ముఖ్య వార్తలు త్వరలో...</div>';return}
-document.getElementById("tickerText").textContent=allPosts.slice(0,5).map(p=>p.title).join(" ★ ");showAll()
-}catch(error){box.innerHTML='<div class="empty">వార్తలు లోడ్ కాలేదు. కొద్దిసేపటి తర్వాత ప్రయత్నించండి.</div>';document.getElementById("heroNews").textContent="వార్తలు లోడ్ కాలేదు.";console.error(error)}}
-async function shareAP13(){
-const data={title:"AP13 NEWS",text:"నిజం జనం ముందుకు.... AP13 NEWS",url:window.location.href};
-try{if(navigator.share){await navigator.share(data)}else if(navigator.clipboard){await navigator.clipboard.writeText(data.url);alert("AP13 NEWS లింక్ కాపీ అయింది.")}else{alert("ఈ బ్రౌజర్‌లో షేర్ సదుపాయం అందుబాటులో లేదు.")}}catch(e){console.log("Share cancelled")}}
-loadAP13News();
+  const AP13_CSV_URL =
+    "https://docs.google.com/spreadsheets/d/1AzJM8iXio5pnyV-xjsz6gr7uZ7w7bve20ul0-88f-F4/gviz/tq?tqx=out:csv&sheet=Public%20News";
+
+  let allNews = [];
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let value = "";
+    let insideQuotes = false;
+
+    text = text.replace(/^\uFEFF/, "");
+
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i];
+      const next = text[i + 1];
+
+      if (char === '"' && insideQuotes && next === '"') {
+        value += '"';
+        i++;
+      } else if (char === '"') {
+        insideQuotes = !insideQuotes;
+      } else if (char === "," && !insideQuotes) {
+        row.push(value);
+        value = "";
+      } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+        if (char === "\r" && next === "\n") i++;
+        row.push(value);
+        if (row.some(cell => cell.trim() !== "")) {
+          rows.push(row);
+        }
+        row = [];
+        value = "";
+      } else {
+        value += char;
+      }
+    }
+
+    row.push(value);
+    if (row.some(cell => cell.trim() !== "")) {
+      rows.push(row);
+    }
+
+    return rows;
+  }
+
+  function findColumn(headers, words, fallback) {
+    const normalized = headers.map(h =>
+      String(h || "").trim().toLowerCase()
+    );
+
+    for (const word of words) {
+      const index = normalized.findIndex(h => h.includes(word));
+      if (index !== -1) return index;
+    }
+
+    return fallback;
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function getImageUrl(value) {
+    const url = String(value || "").trim();
+
+    if (!url) return "";
+
+    const driveMatch = url.match(/(?:id=|\/d\/)([a-zA-Z0-9_-]{15,})/);
+
+    if (driveMatch) {
+      return "https://drive.google.com/thumbnail?id=" +
+        driveMatch[1] + "&sz=w1000";
+    }
+
+    if (/^https?:\/\//i.test(url)) {
+      return url;
+    }
+
+    return "";
+  }
+
+  function renderNews(newsList) {
+    const container = document.getElementById("newsContainer");
+    const status = document.getElementById("newsStatus");
+
+    container.innerHTML = "";
+
+    if (!newsList.length) {
+      status.style.display = "block";
+      status.textContent = "ప్రస్తుతం వార్తలు అందుబాటులో లేవు.";
+      return;
+    }
+
+    status.style.display = "none";
+
+    newsList.forEach(news => {
+      const card = document.createElement("article");
+      card.className = "news-card";
+
+      const imageUrl = getImageUrl(news.photo);
+
+      card.innerHTML = `
+        ${imageUrl ? `
+          <img src="${escapeHTML(imageUrl)}"
+               alt="వార్త ఫోటో"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        ` : ""}
+
+        <div class="news-content">
+          <h3>${escapeHTML(news.headline)}</h3>
+
+          <p>${escapeHTML(news.description)}</p>
+
+          <div class="news-meta">
+            ${news.date ? "తేదీ: " + escapeHTML(news.date) + "<br>" : ""}
+            ${news.reporter ? "రిపోర్టర్: " + escapeHTML(news.reporter) + "<br>" : ""}
+            ${news.publisher ? "ప్రచురించిన వారు: " + escapeHTML(news.publisher) : ""}
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  }
+
+  async function loadNews() {
+    const status = document.getElementById("newsStatus");
+
+    try {
+      const response = await fetch(AP13_CSV_URL, {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error("Google Sheets నుంచి వార్తలు పొందలేకపోయాం.");
+      }
+
+      const csvText = await response.text();
+      const rows = parseCSV(csvText);
+
+      if (rows.length < 2) {
+        allNews = [];
+        renderNews(allNews);
+        return;
+      }
+
+      const headers = rows[0];
+
+      const dateIndex = findColumn(headers, ["date", "తేదీ"], 0);
+      const headlineIndex = findColumn(headers, ["headline", "head line", "శీర్షిక"], 1);
+      const descriptionIndex = findColumn(headers, ["description", "వివరాలు"], 2);
+      const photoIndex = findColumn(headers, ["photo", "image", "ఫోటో"], 3);
+      const reporterIndex = findColumn(headers, ["reporter name", "రిపోర్టర్"], 4);
+      const publisherIndex = findColumn(headers, ["published by", "publisher"], 5);
+
+      allNews = rows.slice(1).map(row => ({
+        date: row[dateIndex] || "",
+        headline: row[headlineIndex] || "",
+        description: row[descriptionIndex] || "",
+        photo: row[photoIndex] || "",
+        reporter: row[reporterIndex] || "",
+        publisher: row[publisherIndex] || ""
+      })).filter(news => news.headline.trim() !== "");
+
+      renderNews(allNews);
+
+    } catch (error) {
+      console.error("AP13 NEWS Error:", error);
+      status.style.display = "block";
+      status.className = "status error";
+      status.textContent =
+        "వార్తలు లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ లేదా Google Sheets లింక్‌ను పరిశీలించండి.";
+    }
+  }
+
+  function filterNews() {
+    const search = document.getElementById("searchInput")
+      .value.trim().toLowerCase();
+
+    const filtered = allNews.filter(news =>
+      (news.headline + " " + news.description + " " +
+       news.reporter + " " + news.date)
+        .toLowerCase()
+        .includes(search)
+    );
+
+    renderNews(filtered);
+  }
+
+  loadNews();
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .catch(error => console.log("Service Worker:", error));
+    });
+  }
 </script>
-<script>
-if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("./sw.js").catch(console.error)})}
-</script>
+
 </body>
 </html>
-'''
-
-# Save the complete HTML file.
-out = Path("/mnt/data/AP13_NEWS_index.html")
-out.write_text(html, encoding="utf-8")
-
-# Verify that both Admin links use the new deployment and no old deployment remains.
-new_url = "https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
-old_url = "https://script.google.com/macros/s/AKfycbxhkIflbpSJZADG71aKYMGOHXDyrPNN8ICZk2H7m14LMRJ13YcnWMl8YtC6bEp5_Z4Rmg/exec"
-assert html.count(new_url) == 2
-assert old_url not in html
-print(f"పూర్తి index.html ఫైల్ సిద్ధమైంది: {out.name}")
-print("ధృవీకరణ: కొత్త Admin Panel లింక్ 2 చోట్ల ఉంది; పాత లింక్ లేదు.")
