@@ -1,3 +1,5 @@
+from pathlib import Path
+
 html = r'''<!DOCTYPE html>
 <html lang="te">
 <head>
@@ -114,7 +116,7 @@ main{padding:8px 10px}
 <div class="actions">
 <a class="action-btn reporter-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&amp;ouid=117282040008596624971" target="_blank" rel="noopener">📝 రిపోర్టర్‌గా చేరండి</a>
 <a class="action-btn submit-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&amp;ouid=117282040008596624971" target="_blank" rel="noopener">📰 వార్తలు పంపండి</a>
-<a class="action-btn admin-btn" href="https://script.google.com/macros/s/AKfycbxhkIflbpSJZADG71aKYMGOHXDyrPNN8ICZk2H7m14LMRJ13YcnWMl8YtC6bEp5_Z4Rmg/exec" target="_self">🔐 Admin Panel</a>
+<a class="action-btn admin-btn" href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec" target="_self">🔐 Admin Panel</a>
 </div>
 <main>
 <input id="searchBox" class="search-box" type="search" placeholder="🔍 వార్తలను వెతకండి..." aria-label="వార్తలను వెతకండి">
@@ -137,7 +139,7 @@ main{padding:8px 10px}
 <a href="#news" onclick="showAll();return true"><span class="symbol">📰</span>వార్తలు</a>
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing" target="_blank" rel="noopener"><span class="symbol">✍️</span>వార్త పంపు</a>
 <button onclick="shareAP13()"><span class="symbol">📤</span>షేర్</button>
-<a href="https://script.google.com/macros/s/AKfycbxhkIflbpSJZADG71aKYMGOHXDyrPNN8ICZk2H7m14LMRJ13YcnWMl8YtC6bEp5_Z4Rmg/exec" target="_self"><span class="symbol">⚙️</span>Admin</a>
+<a href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec" target="_self"><span class="symbol">⚙️</span>Admin</a>
 </div>
 <script>
 const AP13_CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTf0kjzdUQFm0mv87JEFoQfdYpqeIkb3Xovp68rmI2yJ6HvLYHaUl_lV2Xc55bmsl2_ntpk3SPew_c/pub?gid=853433044&single=true&output=csv";
@@ -226,7 +228,15 @@ if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.s
 </body>
 </html>
 '''
-path = "/mnt/data/index.html"
-with open(path, "w", encoding="utf-8") as f:
-    f.write(html)
-print(f"తయారైంది: {path}")
+
+# Save the complete HTML file.
+out = Path("/mnt/data/AP13_NEWS_index.html")
+out.write_text(html, encoding="utf-8")
+
+# Verify that both Admin links use the new deployment and no old deployment remains.
+new_url = "https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
+old_url = "https://script.google.com/macros/s/AKfycbxhkIflbpSJZADG71aKYMGOHXDyrPNN8ICZk2H7m14LMRJ13YcnWMl8YtC6bEp5_Z4Rmg/exec"
+assert html.count(new_url) == 2
+assert old_url not in html
+print(f"పూర్తి index.html ఫైల్ సిద్ధమైంది: {out.name}")
+print("ధృవీకరణ: కొత్త Admin Panel లింక్ 2 చోట్ల ఉంది; పాత లింక్ లేదు.")
