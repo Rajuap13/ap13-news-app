@@ -2,254 +2,77 @@
 <!DOCTYPE html>
 <html lang="te">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#b00020">
-  <meta name="description" content="AP13 NEWS - ఆంధ్రప్రదేశ్ మరియు తెలంగాణ తాజా వార్తలు">
-  <title>AP13 NEWS | నిజం జనం ముందుకు</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#a90020">
+<meta name="description" content="AP13 NEWS - ఆంధ్రప్రదేశ్ మరియు తెలంగాణ తాజా వార్తలు">
+<title>AP13 NEWS | నిజం జనం ముందుకు</title>
 
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./icon-512.png">
-  <link rel="apple-touch-icon" href="./icon-512.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icon-512.png">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, "Noto Sans Telugu", sans-serif;
-      background: #f4f5f7;
-      color: #222;
-    }
-
-    header {
-      background: #b00020;
-      color: white;
-      text-align: center;
-      padding: 14px 10px 18px;
-    }
-
-    .banner {
-      width: 100%;
-      max-width: 950px;
-      max-height: 190px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto 8px;
-    }
-
-    header h1 {
-      margin: 8px 0;
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    header p {
-      margin: 5px 0;
-      font-size: 16px;
-    }
-
-    .tagline {
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    nav {
-      background: #171717;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 4px;
-      padding: 10px 5px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 13px;
-      font-size: 14px;
-      border-radius: 5px;
-    }
-
-    nav a:hover {
-      background: #b00020;
-    }
-
-    .breaking {
-      background: #fff0f0;
-      color: #b00020;
-      padding: 10px;
-      text-align: center;
-      font-weight: bold;
-      border-bottom: 1px solid #ddd;
-    }
-
-    .container {
-      width: 94%;
-      max-width: 1100px;
-      margin: 20px auto;
-    }
-
-    .section-title {
-      background: #b00020;
-      color: white;
-      padding: 12px 15px;
-      border-radius: 5px;
-      font-size: 20px;
-      margin: 20px 0 15px;
-    }
-
-    .search-box {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #ccc;
-      border-radius: 7px;
-      font-size: 16px;
-      margin-bottom: 15px;
-    }
-
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .news-card {
-      background: white;
-      border-radius: 9px;
-      overflow: hidden;
-      box-shadow: 0 2px 9px rgba(0,0,0,0.09);
-      border: 1px solid #e5e5e5;
-    }
-
-    .news-card img {
-      width: 100%;
-      max-height: 240px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .news-content {
-      padding: 15px;
-    }
-
-    .news-content h3 {
-      color: #b00020;
-      font-size: 19px;
-      line-height: 1.5;
-      margin: 0 0 10px;
-    }
-
-    .news-content p {
-      font-size: 15px;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      margin: 8px 0;
-    }
-
-    .news-meta {
-      color: #777;
-      font-size: 13px;
-      border-top: 1px solid #eee;
-      padding-top: 9px;
-      margin-top: 12px;
-    }
-
-    .action-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
-    }
-
-    .action-card {
-      background: white;
-      padding: 20px;
-      text-align: center;
-      border-radius: 9px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .action-card h3 {
-      color: #b00020;
-      margin-top: 0;
-    }
-
-    .action-button {
-      display: inline-block;
-      background: #b00020;
-      color: white;
-      text-decoration: none;
-      padding: 11px 18px;
-      border-radius: 5px;
-      margin-top: 8px;
-      font-weight: bold;
-    }
-
-    .action-button:hover {
-      background: #850018;
-    }
-
-    .status {
-      text-align: center;
-      padding: 20px;
-      color: #555;
-      background: white;
-      border-radius: 7px;
-      margin-bottom: 15px;
-    }
-
-    .error {
-      color: #b00020;
-    }
-
-    footer {
-      background: #171717;
-      color: white;
-      text-align: center;
-      padding: 22px 12px;
-      margin-top: 35px;
-      line-height: 1.8;
-    }
-
-    footer strong {
-      color: #ffb5c2;
-    }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 27px;
-      }
-
-      nav a {
-        padding: 9px;
-        font-size: 13px;
-      }
-
-      .container {
-        width: 94%;
-      }
-
-      .section-title {
-        font-size: 18px;
-      }
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f1f3f6;color:#20232a;font-family:Arial,"Noto Sans Telugu",sans-serif;padding-bottom:65px}
+header{background:linear-gradient(135deg,#a90020,#d00030);color:white;padding:14px 12px;display:flex;align-items:center;gap:13px;box-shadow:0 3px 10px #0003}
+.logo{width:68px;height:68px;object-fit:contain;background:white;border-radius:14px;padding:4px}
+.brand h1{margin:0;font-size:25px}
+.brand p{margin:5px 0;font-size:12px}
+.tagline{font-weight:bold;letter-spacing:.4px}
+.livebar{background:#101d35;color:white;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:bold}
+.live{background:#e60032;padding:4px 9px;border-radius:4px}
+nav{display:flex;overflow-x:auto;white-space:nowrap;background:#17243c;padding:10px 5px;gap:5px}
+nav a{color:white;text-decoration:none;padding:9px 12px;font-size:13px;border-radius:5px}
+nav a:hover{background:#b00020}
+.breaking{background:#fff0f2;color:#a90020;padding:11px;font-weight:bold;text-align:center;border-bottom:1px solid #ddd}
+.container{width:95%;max-width:1100px;margin:16px auto}
+.section-title{background:#17243c;color:white;padding:12px 14px;border-left:5px solid #c0002b;border-radius:5px;font-size:19px;margin:20px 0 14px}
+.search-box{width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;font-size:15px;margin-bottom:14px}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}
+.news-card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 9px #00000012;border:1px solid #e7e7e7}
+.news-card img{width:100%;max-height:240px;object-fit:cover;display:block}
+.news-content{padding:14px}
+.news-content h3{color:#a90020;font-size:18px;line-height:1.6;margin:0 0 9px}
+.news-content p{font-size:15px;line-height:1.8;white-space:pre-wrap;margin:8px 0}
+.news-meta{color:#777;font-size:12px;border-top:1px solid #eee;padding-top:9px;margin-top:12px;line-height:1.8}
+.status{background:white;border-radius:8px;text-align:center;padding:20px;margin-bottom:15px;color:#555}
+.error{color:#b00020}
+.action-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.action-card{background:white;padding:20px;text-align:center;border-radius:10px;box-shadow:0 2px 8px #00000012}
+.action-card h3{color:#a90020;margin-top:0}
+.action-button{display:inline-block;background:#b00020;color:white;text-decoration:none;padding:11px 18px;border-radius:6px;margin-top:8px;font-weight:bold}
+.contact{background:white;padding:18px;border-radius:9px;text-align:center;line-height:1.8}
+footer{background:#17243c;color:white;text-align:center;padding:22px 12px;margin-top:30px;line-height:1.9}
+footer strong{color:#ffb5c2}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#17243c;display:flex;justify-content:space-around;padding:9px 2px;z-index:10;box-shadow:0 -2px 8px #0002}
+.bottom-nav a{color:white;text-decoration:none;text-align:center;font-size:11px;flex:1}
+.bottom-nav span{display:block;font-size:19px;margin-bottom:3px}
+@media(max-width:600px){
+ .brand h1{font-size:22px}
+ .logo{width:60px;height:60px}
+ .container{width:94%}
+ .news-grid{grid-template-columns:1fr}
+ .section-title{font-size:18px}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <img class="banner" src="./ap13-banner.png"
-       alt="AP13 NEWS"
-       onerror="this.style.display='none'">
-
-  <h1>ఏపీ 13 న్యూస్</h1>
-  <p>ANDHRA PRADESH - TELANGANA</p>
-  <p class="tagline">నిజం జనం ముందుకు....</p>
+  <img class="logo" src="./icon-512.png" alt="AP13 NEWS Logo">
+  <div class="brand">
+    <h1>ఏపీ 13 న్యూస్</h1>
+    <p>ANDHRA PRADESH - TELANGANA</p>
+    <p class="tagline">నిజం జనం ముందుకు....</p>
+  </div>
 </header>
+
+<div class="livebar">
+  <span>AP13 NEWS NETWORK</span>
+  <span class="live">● LIVE NEWS</span>
+</div>
 
 <nav>
   <a href="#home">హోమ్</a>
@@ -257,8 +80,7 @@
   <a href="#reporter">రిపోర్టర్ అవ్వండి</a>
   <a href="#submit">వార్త పంపండి</a>
   <a href="#contact">సంప్రదించండి</a>
-  <a href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
-     target="_blank" rel="noopener">అడ్మిన్ ప్యానెల్</a>
+  <a href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec" target="_blank" rel="noopener">అడ్మిన్</a>
 </nav>
 
 <div class="breaking">
@@ -267,296 +89,201 @@
 
 <main class="container" id="home">
 
-  <h2 class="section-title" id="latest">తాజా వార్తలు</h2>
+<h2 class="section-title" id="latest">📰 తాజా వార్తలు</h2>
 
-  <input
-    type="search"
-    id="searchInput"
-    class="search-box"
-    placeholder="వార్తల కోసం వెతకండి..."
-    oninput="filterNews()"
-  >
+<input type="search" id="searchInput" class="search-box"
+placeholder="వార్తల కోసం వెతకండి..." oninput="filterNews()">
 
-  <div id="newsStatus" class="status">
-    వార్తలు లోడ్ అవుతున్నాయి... దయచేసి వేచి ఉండండి.
-  </div>
+<div id="newsStatus" class="status">
+వార్తలు లోడ్ అవుతున్నాయి... దయచేసి వేచి ఉండండి.
+</div>
 
-  <div id="newsContainer" class="news-grid"></div>
+<div id="newsContainer" class="news-grid"></div>
 
-  <h2 class="section-title">AP13 NEWS సేవలు</h2>
+<h2 class="section-title">AP13 NEWS సేవలు</h2>
 
-  <div class="action-section">
+<div class="action-section">
 
-    <div class="action-card" id="reporter">
-      <h3>రిపోర్టర్‌గా చేరండి</h3>
-      <p>
-        ఆంధ్రప్రదేశ్ మరియు తెలంగాణలోని ఆసక్తి ఉన్నవారు
-        AP13 NEWS రిపోర్టర్లుగా చేరవచ్చు.
-      </p>
-      <a class="action-button"
-         href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&ouid=117282040008596624971"
-         target="_blank" rel="noopener">
-        అప్లికేషన్ పంపండి
-      </a>
-    </div>
+<div class="action-card" id="reporter">
+<h3>రిపోర్టర్‌గా చేరండి</h3>
+<p>ఆంధ్రప్రదేశ్ మరియు తెలంగాణలో AP13 NEWS రిపోర్టర్‌గా చేరండి.</p>
+<a class="action-button"
+href="https://docs.google.com/forms/d/e/1FAIpQLSewGNkZz22jPUIJOREUlilA3_JE8rrUvP7y1zSG4BDHarYE8w/viewform?usp=sharing&ouid=117282040008596624971"
+target="_blank" rel="noopener">అప్లికేషన్ పంపండి</a>
+</div>
 
-    <div class="action-card" id="submit">
-      <h3>వార్త పంపండి</h3>
-      <p>
-        మీ ప్రాంతంలో జరిగే ప్రజా సమస్యలు, సంఘటనలు,
-        కార్యక్రమాల వార్తలను మాకు పంపండి.
-      </p>
-      <a class="action-button"
-         href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&ouid=117282040008596624971"
-         target="_blank" rel="noopener">
-        ఇప్పుడే వార్త పంపండి
-      </a>
-    </div>
+<div class="action-card" id="submit">
+<h3>వార్త పంపండి</h3>
+<p>మీ ప్రాంతంలో జరిగే ప్రజా సమస్యలు, సంఘటనలు, కార్యక్రమాల వార్తలను పంపండి.</p>
+<a class="action-button"
+href="https://docs.google.com/forms/d/e/1FAIpQLSeFS7F1iblOieaQbn6ahR5tSKzUoLeMCw-EzIrBnQ7e2yLrOw/viewform?usp=sharing&ouid=117282040008596624971"
+target="_blank" rel="noopener">ఇప్పుడే వార్త పంపండి</a>
+</div>
 
-    <div class="action-card">
-      <h3>అడ్మిన్ ప్యానెల్</h3>
-      <p>
-        వచ్చిన వార్తలు, రిపోర్టర్ అప్లికేషన్లను
-        పరిశీలించడానికి అడ్మిన్ విభాగం.
-      </p>
-      <a class="action-button"
-         href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
-         target="_blank" rel="noopener">
-        అడ్మిన్ ఓపెన్ చేయండి
-      </a>
-    </div>
+<div class="action-card">
+<h3>అడ్మిన్ ప్యానెల్</h3>
+<p>వార్తలు మరియు రిపోర్టర్ అప్లికేషన్లను పరిశీలించండి.</p>
+<a class="action-button"
+href="https://script.google.com/macros/s/AKfycbyC2yKKMqw0Krb91mVf5jrllf-RL5h5Ip0CA6WnXxda5brpyvArmTSASk6_RRTUigaVtw/exec"
+target="_blank" rel="noopener">అడ్మిన్ ఓపెన్ చేయండి</a>
+</div>
 
-  </div>
+</div>
 
-  <h2 class="section-title" id="contact">సంప్రదించండి</h2>
-  <div class="action-card">
-    <p><strong>AP13 NEWS</strong></p>
-    <p>ఆంధ్రప్రదేశ్ - తెలంగాణ</p>
-    <p>
-      Email:
-      <a href="mailto:apnews13local@gmail.com">
-        apnews13local@gmail.com
-      </a>
-    </p>
-  </div>
+<h2 class="section-title" id="contact">సంప్రదించండి</h2>
+<div class="contact">
+<strong>AP13 NEWS</strong>
+<p>ఆంధ్రప్రదేశ్ - తెలంగాణ</p>
+<p>Email: <a href="mailto:apnews13local@gmail.com">apnews13local@gmail.com</a></p>
+</div>
 
 </main>
 
 <footer>
-  <strong>ఏపీ 13 న్యూస్</strong>
-  <br>
-  నిజం జనం ముందుకు....
-  <br>
-  ANDHRA PRADESH - TELANGANA
-  <br>
-  © 2026 AP13 NEWS. All Rights Reserved.
+<strong>ఏపీ 13 న్యూస్</strong><br>
+నిజం జనం ముందుకు....<br>
+ANDHRA PRADESH - TELANGANA<br>
+© 2026 AP13 NEWS. All Rights Reserved.
 </footer>
 
+<div class="bottom-nav">
+<a href="#home"><span>⌂</span>హోమ్</a>
+<a href="#latest"><span>▤</span>వార్తలు</a>
+<a href="#reporter"><span>✚</span>రిపోర్టర్</a>
+<a href="#submit"><span>✉</span>వార్త పంపండి</a>
+</div>
+
 <script>
-  const AP13_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTf0kjzdUQFm0mv87JEFoQfdYpqeIkb3Xovp68rmI2yJ6HvLYHaUl_lV2Xc55bmsl2_ntpk3SPew_c/pub?gid=853433044&single=true&output=csv";
+const AP13_FEED_URL =
+"https://script.google.com/macros/s/AKfycbzZJncKm8_ylP4x0m9Xv7fqlxFFj0G2w3SkQbomYWjaKk__MnrBHgwAHEHUP9vJJrcUBg/exec?feed=public";
 
-  let allNews = [];
+let allNews = [];
 
-  function parseCSV(text) {
-    const rows = [];
-    let row = [];
-    let value = "";
-    let insideQuotes = false;
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
 
-    text = text.replace(/^\uFEFF/, "");
+function getImageUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) return "";
 
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      const next = text[i + 1];
-
-      if (char === '"' && insideQuotes && next === '"') {
-        value += '"';
-        i++;
-      } else if (char === '"') {
-        insideQuotes = !insideQuotes;
-      } else if (char === "," && !insideQuotes) {
-        row.push(value);
-        value = "";
-      } else if ((char === "\n" || char === "\r") && !insideQuotes) {
-        if (char === "\r" && next === "\n") i++;
-        row.push(value);
-        if (row.some(cell => cell.trim() !== "")) {
-          rows.push(row);
-        }
-        row = [];
-        value = "";
-      } else {
-        value += char;
-      }
-    }
-
-    row.push(value);
-    if (row.some(cell => cell.trim() !== "")) {
-      rows.push(row);
-    }
-
-    return rows;
+  const match = url.match(/(?:id=|\/d\/)([a-zA-Z0-9_-]{15,})/);
+  if (match) {
+    return "https://drive.google.com/thumbnail?id=" +
+      match[1] + "&sz=w1000";
   }
 
-  function findColumn(headers, words, fallback) {
-    const normalized = headers.map(h =>
-      String(h || "").trim().toLowerCase()
-    );
+  if (/^https?:\/\//i.test(url)) return url;
+  return "";
+}
 
-    for (const word of words) {
-      const index = normalized.findIndex(h => h.includes(word));
-      if (index !== -1) return index;
-    }
+function renderNews(newsList) {
+  const container = document.getElementById("newsContainer");
+  const status = document.getElementById("newsStatus");
 
-    return fallback;
+  container.innerHTML = "";
+
+  if (!newsList.length) {
+    status.style.display = "block";
+    status.className = "status";
+    status.textContent = "ప్రస్తుతం వార్తలు అందుబాటులో లేవు.";
+    return;
   }
 
-  function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    })[char]);
-  }
+  status.style.display = "none";
 
-  function getImageUrl(value) {
-    const url = String(value || "").trim();
+  newsList.forEach(news => {
+    const card = document.createElement("article");
+    card.className = "news-card";
 
-    if (!url) return "";
+    const imageUrl = getImageUrl(news.photo);
 
-    const driveMatch = url.match(/(?:id=|\/d\/)([a-zA-Z0-9_-]{15,})/);
-
-    if (driveMatch) {
-      return "https://drive.google.com/thumbnail?id=" +
-        driveMatch[1] + "&sz=w1000";
-    }
-
-    if (/^https?:\/\//i.test(url)) {
-      return url;
-    }
-
-    return "";
-  }
-
-  function renderNews(newsList) {
-    const container = document.getElementById("newsContainer");
-    const status = document.getElementById("newsStatus");
-
-    container.innerHTML = "";
-
-    if (!newsList.length) {
-      status.style.display = "block";
-      status.textContent = "ప్రస్తుతం వార్తలు అందుబాటులో లేవు.";
-      return;
-    }
-
-    status.style.display = "none";
-
-    newsList.forEach(news => {
-      const card = document.createElement("article");
-      card.className = "news-card";
-
-      const imageUrl = getImageUrl(news.photo);
-
-      card.innerHTML = `
-        ${imageUrl ? `
-          <img src="${escapeHTML(imageUrl)}"
-               alt="వార్త ఫోటో"
-               loading="lazy"
-               onerror="this.style.display='none'">
-        ` : ""}
-
-        <div class="news-content">
-          <h3>${escapeHTML(news.headline)}</h3>
-
-          <p>${escapeHTML(news.description)}</p>
-
-          <div class="news-meta">
-            ${news.date ? "తేదీ: " + escapeHTML(news.date) + "<br>" : ""}
-            ${news.reporter ? "రిపోర్టర్: " + escapeHTML(news.reporter) + "<br>" : ""}
-            ${news.publisher ? "ప్రచురించిన వారు: " + escapeHTML(news.publisher) : ""}
-          </div>
+    card.innerHTML = `
+      ${imageUrl ? `
+        <img src="${escapeHTML(imageUrl)}"
+             alt="వార్త ఫోటో"
+             loading="lazy"
+             onerror="this.style.display='none'">
+      ` : ""}
+      <div class="news-content">
+        <h3>${escapeHTML(news.headline)}</h3>
+        <p>${escapeHTML(news.description)}</p>
+        <div class="news-meta">
+          ${news.date ? "తేదీ: " + escapeHTML(news.date) + "<br>" : ""}
+          ${news.reporter ? "రిపోర్టర్: " + escapeHTML(news.reporter) + "<br>" : ""}
+          ${news.publisher ? "ప్రచురించిన వారు: " + escapeHTML(news.publisher) : ""}
         </div>
-      `;
+      </div>
+    `;
 
-      container.appendChild(card);
+    container.appendChild(card);
+  });
+}
+
+async function loadNews() {
+  const status = document.getElementById("newsStatus");
+
+  try {
+    const response = await fetch(AP13_FEED_URL, {
+      cache: "no-store"
     });
-  }
 
-  async function loadNews() {
-    const status = document.getElementById("newsStatus");
-
-    try {
-      const response = await fetch(AP13_CSV_URL, {
-        cache: "no-store"
-      });
-
-      if (!response.ok) {
-        throw new Error("Google Sheets నుంచి వార్తలు పొందలేకపోయాం.");
-      }
-
-      const csvText = await response.text();
-      const rows = parseCSV(csvText);
-
-      if (rows.length < 2) {
-        allNews = [];
-        renderNews(allNews);
-        return;
-      }
-
-      const headers = rows[0];
-
-      const dateIndex = findColumn(headers, ["date", "తేదీ"], 0);
-      const headlineIndex = findColumn(headers, ["headline", "head line", "శీర్షిక"], 1);
-      const descriptionIndex = findColumn(headers, ["description", "వివరాలు"], 2);
-      const photoIndex = findColumn(headers, ["photo", "image", "ఫోటో"], 3);
-      const reporterIndex = findColumn(headers, ["reporter name", "రిపోర్టర్"], 4);
-      const publisherIndex = findColumn(headers, ["published by", "publisher"], 5);
-
-      allNews = rows.slice(1).map(row => ({
-        date: row[dateIndex] || "",
-        headline: row[headlineIndex] || "",
-        description: row[descriptionIndex] || "",
-        photo: row[photoIndex] || "",
-        reporter: row[reporterIndex] || "",
-        publisher: row[publisherIndex] || ""
-      })).filter(news => news.headline.trim() !== "");
-
-      renderNews(allNews);
-
-    } catch (error) {
-      console.error("AP13 NEWS Error:", error);
-      status.style.display = "block";
-      status.className = "status error";
-      status.textContent =
-        "వార్తలు లోడ్ కాలేదు. ఇంటర్నెట్ కనెక్షన్ లేదా Google Sheets లింక్‌ను పరిశీలించండి.";
+    if (!response.ok) {
+      throw new Error("Public News Feed లో సమస్య ఉంది.");
     }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error("వార్తల డేటా సరిగ్గా లేదు.");
+    }
+
+    allNews = data.map(news => ({
+      date: news.date || "",
+      headline: news.headline || "",
+      description: news.description || "",
+      photo: news.photo || "",
+      reporter: news.reporterName || "",
+      publisher: news.publishedBy || ""
+    })).filter(news => news.headline.trim() !== "");
+
+    renderNews(allNews);
+
+  } catch (error) {
+    console.error("AP13 NEWS Error:", error);
+    status.style.display = "block";
+    status.className = "status error";
+    status.textContent = "వార్తలు లోడ్ కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.";
   }
+}
 
-  function filterNews() {
-    const search = document.getElementById("searchInput")
-      .value.trim().toLowerCase();
+function filterNews() {
+  const search = document.getElementById("searchInput")
+    .value.trim().toLowerCase();
 
-    const filtered = allNews.filter(news =>
-      (news.headline + " " + news.description + " " +
-       news.reporter + " " + news.date)
-        .toLowerCase()
-        .includes(search)
-    );
+  const filtered = allNews.filter(news =>
+    (news.headline + " " + news.description + " " +
+    news.reporter + " " + news.date)
+      .toLowerCase().includes(search)
+  );
 
-    renderNews(filtered);
-  }
+  renderNews(filtered);
+}
 
-  loadNews();
+loadNews();
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js")
-        .catch(error => console.log("Service Worker:", error));
-    });
-  }
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .catch(error => console.log("Service Worker:", error));
+  });
+}
 </script>
 
 </body>
